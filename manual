@@ -1,0 +1,17 @@
+** change local paths to url-based
+  ||    _   ___   __                 ___  ||
+  ||   /    |     | \  \   / | \   / |    ||
+  ||  |     |--   | <   \ /  |  \ /  |--  ||
+  ||   \    |     |  \   V   |   V   |    ||
+  ||    ¯   ¯¯¯¯                     ¯¯¯¯ ||
+
+    It is the year 30,000 AD. You are an alien crash landed on Earth, arriving to find a post-apocalyptic world.
+    Your Geiger counter tells you there might be something fishy in the center of the European continent.
+
+    Welcome to CERN.
+
+    Key commands
+
+    S - squishes alien down to avoid blue holes
+    D - separates alien into top and bottom to avoid blue holes
+    F - squishes alien up to avoid blue holes
