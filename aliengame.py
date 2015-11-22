@@ -64,7 +64,7 @@ def tick(keys):
         alien.x += 5
     if pygame.K_LEFT in keys:
         alien.x -= 5
-    camera.clear("cyan")
+    camera.clear("skyblue")
     camera.draw(alien)
     for platform in platforms:
         camera.draw(platform)
@@ -73,5 +73,16 @@ def tick(keys):
     camera.display()
 ticks_per_second = 30
 
+def start(keys):
+
+    camera.clear("skyblue")
+    camera.draw(gamebox.from_text(500,500,"Our Game", "Futura",20,"black"))
+    camera.draw(gamebox.from_text(500,600,"Press SPACE to start", "Futura",20,'black'))
+
+    camera.display()
+    if pygame.K_SPACE in keys:
+        gamebox.timer_loop(ticks_per_second, tick)
+
+gamebox.timer_loop(ticks_per_second,start)
 # keep this line the last one in your program
-gamebox.timer_loop(ticks_per_second, tick)
+
