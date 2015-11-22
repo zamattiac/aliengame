@@ -9,8 +9,8 @@ alien = gamebox.from_image(150, 15, "http://people.virginia.edu/~mak2vr/files/al
 alien.scale_by(1.6)
 alien.yspeed = 0
 
-levels = gamebox.from_image(400,465,"http://people.virginia.edu/~mak2vr/files/alien/levels.png")
-levels.scale_by(1.5)
+levels = gamebox.from_image(400,465,"right-side.png")
+
 
 blue_hole_sheet = gamebox.load_sprite_sheet("http://people.virginia.edu/~mak2vr/files/alien/bluehole.png",1,5)
 x = 0
