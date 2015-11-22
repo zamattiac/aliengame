@@ -5,11 +5,16 @@ import pygame
 import gamebox
 
 camera = gamebox.Camera(1000,800,True)
-alien = gamebox.from_image(150, 15, "http://people.virginia.edu/~mak2vr/files/alien/alien.png")
+alien = gamebox.from_image(10, 15, "http://people.virginia.edu/~mak2vr/files/alien/alien.png")
 alien.scale_by(1.6)
 alien.yspeed = 0
 
-levels = gamebox.from_image(400,465,"right-side.png")
+platforms = [gamebox.from_color(50,100,"black",100,20),
+          gamebox.from_color(300,200,"black",600,20),
+          gamebox.from_color(625,225,"black",50,20),
+          gamebox.from_color(675,250,"black",50,20),
+          gamebox.from_color(1000,275,"brown",50,800),
+]
 
 
 blue_hole_sheet = gamebox.load_sprite_sheet("http://people.virginia.edu/~mak2vr/files/alien/bluehole.png",1,5)
@@ -26,11 +31,7 @@ blueholes = [
 for bluehole in blueholes:
     bluehole.scale_by(3)
 
-platforms = [
-    # gamebox.from_color(-100, 600, "black", 3000, 100),
-    levels
-    # ground1
-]
+
 
 def tick(keys):
 
