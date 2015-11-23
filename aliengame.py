@@ -3,6 +3,7 @@
 
 import pygame
 import gamebox
+import random
 
 camera = gamebox.Camera(1000,800,True)
 alien = gamebox.from_image(10, 15, "http://people.virginia.edu/~mak2vr/files/alien/alien.png")
