@@ -6,16 +6,12 @@ import gamebox
 import random
 
 camera = gamebox.Camera(1000,800,True)
-alien = gamebox.from_image(10, 15, "http://people.virginia.edu/~mak2vr/files/alien/alien.png")
+alien = gamebox.from_image(30, 15, "http://people.virginia.edu/~mak2vr/files/alien/alien.png")
 alien.scale_by(1.6)
 alien.yspeed = 0
 
 
-platforms = [gamebox.from_color(50,100,"black",100,20),
-          gamebox.from_color(300,200,"black",600,20),
-          gamebox.from_color(625,225,"black",50,20),
-          gamebox.from_color(675,250,"black",50,20),
-          gamebox.from_color(1000,275,"brown",50,800),
+platforms = [gamebox.from_color(50,100,"black",1000,20),
 
 ]
 
@@ -40,9 +36,10 @@ def tick(keys):
         x = 0
 
     score += 1
+    scoreboard = gamebox.
 
-    camera.x += 2
-    alien.x += 2
+    camera.x += 10
+    alien.x += 10
 
     for bluehole in blueholes:
         bluehole.image = blue_hole_sheet[x]
@@ -66,6 +63,8 @@ def tick(keys):
     for platform in platforms:
         if alien.touches(platform):
             alien.move_to_stop_overlapping(platform)
+        if platform.x < (camera.x-1000):
+            platforms.remove(platform)
 
     if pygame.K_RIGHT in keys:
         alien.x += 5
@@ -73,6 +72,7 @@ def tick(keys):
         alien.x -= 5
     camera.clear("skyblue")
     camera.draw(alien)
+    camera.draw(scoreboard)
     for platform in platforms:
         camera.draw(platform)
     for bluehole in blueholes:
