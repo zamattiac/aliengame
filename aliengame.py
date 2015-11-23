@@ -30,13 +30,10 @@ score = 0
 def tick(keys):
 
     global x, score
-    x += 1
-
-    if x == 3:
-        x = 0
+    x += 10
 
     score += 1
-    scoreboard = gamebox.
+    scoreboard = gamebox.from_text(800+x,50,(str(score)),"Verdana",26,"black")
 
     camera.x += 10
     alien.x += 10
@@ -49,7 +46,7 @@ def tick(keys):
     alien.y = alien.y + alien.yspeed
 
     if pygame.K_SPACE in keys:
-        alien.yspeed -= 3
+        alien.yspeed -= 10
 
     if pygame.K_s in keys:
         alien.image = "http://people.virginia.edu/~mak2vr/files/alien/alien_top.png"
