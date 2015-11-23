@@ -14,6 +14,7 @@ alien.yspeed = 0
 platforms = [gamebox.from_color(100,400,"black",1000,30),
              gamebox.from_color(500,400,"black",1000,30),
 ]
+
 length = 1000
 prev_length = 1000
 time_on = 50
@@ -25,7 +26,7 @@ y = 1000
 
 
 blue_hole_sheet = gamebox.load_sprite_sheet("http://people.virginia.edu/~mak2vr/files/alien/bluehole.png",1,5)
-x = 500
+x = 1500
 
 blueholes = []
 
@@ -44,7 +45,8 @@ def tick(keys):
     if camera.x % 2000 == 0:
         speed += 4
 
-    score += speed
+    #score += speed
+    score = camera.x
     scoreboard = gamebox.from_text(camera.x+300,50,(str(score)),"Verdana",26,"black")
 
     camera.x += speed
@@ -52,15 +54,15 @@ def tick(keys):
 
     time_on += speed
 
-
-
-    if time_on:
+    if time_on >= .2*length:
         time_on = 0
         prev_length = length
         prev_height = height
+        prev_x = x
         length = random.randint(300,600)
         height = random.randint(300,700)
-        platforms.append(gamebox.from_color(camera.x,height,"black",length,30))
+        platforms.append(gamebox.from_color(speed*10,height,"black",length,30))
+        x = camera.x
 
 
 
@@ -115,6 +117,8 @@ def tick(keys):
         camera.display()
         print(alien.x)
         print(speed)
+        for platform in platforms:
+            print(platform.x)
 
 
     if alien.y >= 800:
