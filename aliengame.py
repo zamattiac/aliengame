@@ -23,26 +23,26 @@ platforms = [gamebox.from_color(50,100,"black",100,20),
 blue_hole_sheet = gamebox.load_sprite_sheet("http://people.virginia.edu/~mak2vr/files/alien/bluehole.png",1,5)
 x = 0
 
-blueholes = [
-    # gamebox.from_image(150,7,blue_hole_sheet[0]),
-    gamebox.from_image(100,7,blue_hole_sheet[0]),
-    gamebox.from_image(200,7,blue_hole_sheet[1]),
-    gamebox.from_image(300,7,blue_hole_sheet[2]),
-    gamebox.from_image(400,7,blue_hole_sheet[3])
-]
+blueholes = []
 
 for bluehole in blueholes:
     bluehole.scale_by(3)
 
+score = 0
 
 
 def tick(keys):
 
-    global x
+    global x, score
     x += 1
 
     if x == 3:
         x = 0
+
+    score += 1
+
+    camera.x += 2
+    alien.x += 2
 
     for bluehole in blueholes:
         bluehole.image = blue_hole_sheet[x]
