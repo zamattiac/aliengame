@@ -7,7 +7,7 @@ import random
 
 camera = gamebox.Camera(1000,800,True)
 alien = gamebox.from_image(300, 15, "http://people.virginia.edu/~mak2vr/files/alien/alien.png")
-alien.scale_by(1.6)
+alien.scale_by(1.3)
 alien.yspeed = 0
 
 
@@ -28,6 +28,7 @@ platform_end
 
 time_on = 300
 
+y=0
 
 blue_hole_sheet = gamebox.load_sprite_sheet("http://people.virginia.edu/~mak2vr/files/alien/bluehole.png",1,5)
 x = 1500
@@ -43,8 +44,13 @@ speed = 10
 
 def tick(keys):
 
+
+
     global x, score, y, platform_x, time_on, speed, platform_length, platform_end, prev_length, prev_end, prev_x, radius, prev_radius
 
+    if y > 3:
+        y =0
+    y+=1
 
     if camera.x % 2000 == 0:
         speed += 3
@@ -54,6 +60,9 @@ def tick(keys):
 
     camera.x += speed
     alien.x += speed
+
+
+
 
     if alien.x >= (platform_x - platform_length/2) and alien.x <= (platform_x - platform_length/2):
         time_on += speed
@@ -75,15 +84,21 @@ def tick(keys):
 
 
         height = random.randint(300,700)
-
         platforms.append(gamebox.from_color(platform_x,height,"black",2*radius,30))
 
 
+    if len(blueholes) < 4:
+        bluehole_x = random.randint(camera.x,camera.x+500)
+        bluehole_y = random.randint(100,700)
+
+        blueholes.append(gamebox.from_image(bluehole_x,bluehole_y,blue_hole_sheet[y]))
 
 
 
-    for bluehole in blueholes:
-        bluehole.image = blue_hole_sheet[x]
+
+
+
+
 
     # GRAVITY
     alien.yspeed += 1.5
@@ -124,20 +139,21 @@ def tick(keys):
         camera.draw(bluehole)
     camera.display()
 
+
     game_over = gamebox.from_text(camera.x,400,"Game Over","Arial",40,"black",True)
+
     def end():
         gamebox.pause()
         camera.clear("skyblue")
         camera.draw(game_over)
         camera.display()
-        print("alien",alien.x)
-        print("platform_x",platform_x)
-        print("radius",radius)
-        print("platform end",prev_end)
-        print("prev x", prev_x)
-        print("prev end ", prev_end)
-        print("radius",prev_radius)
 
+    for bluehole in blueholes:
+        bluehole.image = blue_hole_sheet[y]
+        if bluehole.x < (camera.x-1000):
+            blueholes.remove(bluehole)
+        if alien.touches(bluehole):
+            end()
 
 
     if alien.y >= 800:
