@@ -10,11 +10,13 @@ alien = gamebox.from_image(10, 15, "http://people.virginia.edu/~mak2vr/files/ali
 alien.scale_by(1.6)
 alien.yspeed = 0
 
+
 platforms = [gamebox.from_color(50,100,"black",100,20),
           gamebox.from_color(300,200,"black",600,20),
           gamebox.from_color(625,225,"black",50,20),
           gamebox.from_color(675,250,"black",50,20),
           gamebox.from_color(1000,275,"brown",50,800),
+
 ]
 
 
@@ -48,6 +50,9 @@ def tick(keys):
     # GRAVITY
     alien.yspeed += 1
     alien.y = alien.y + alien.yspeed
+
+    if pygame.K_SPACE in keys:
+        alien.yspeed -= 3
 
     if pygame.K_s in keys:
         alien.image = "http://people.virginia.edu/~mak2vr/files/alien/alien_top.png"
