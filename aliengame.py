@@ -35,8 +35,6 @@ x = 1500
 
 blueholes = []
 
-for bluehole in blueholes:
-    bluehole.scale_by(4)
 
 score = 0
 
@@ -44,7 +42,8 @@ speed = 10
 
 def tick(keys):
 
-
+    for bluehole in blueholes:
+        bluehole.scale_by(1.018)
 
     global x, score, y, platform_x, time_on, speed, platform_length, platform_end, prev_length, prev_end, prev_x, radius, prev_radius
 
@@ -52,8 +51,8 @@ def tick(keys):
         y =0
     y+=1
 
-    if camera.x % 2000 == 0:
-        speed += 3
+    if camera.x % 1000 == 0:
+        speed += 4
 
     score = int(camera.x)
     scoreboard = gamebox.from_text(camera.x+300,50,(str(score)),"Verdana",26,"black")
@@ -87,9 +86,9 @@ def tick(keys):
         platforms.append(gamebox.from_color(platform_x,height,"black",2*radius,30))
 
 
-    if len(blueholes) < 4:
+    if len(blueholes) < 2:
         bluehole_x = random.randint(camera.x,camera.x+500)
-        bluehole_y = random.randint(100,700)
+        bluehole_y = random.randint(0,800)
 
         blueholes.append(gamebox.from_image(bluehole_x,bluehole_y,blue_hole_sheet[y]))
 
@@ -150,7 +149,7 @@ def tick(keys):
 
     for bluehole in blueholes:
         bluehole.image = blue_hole_sheet[y]
-        if bluehole.x < (camera.x-1000):
+        if bluehole.x < (camera.x-500):
             blueholes.remove(bluehole)
         if alien.touches(bluehole):
             end()
