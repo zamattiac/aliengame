@@ -6,23 +6,27 @@ import gamebox
 import random
 
 camera = gamebox.Camera(1000,800,True)
-alien = gamebox.from_image(500, 15, "http://people.virginia.edu/~mak2vr/files/alien/alien.png")
+alien = gamebox.from_image(300, 15, "http://people.virginia.edu/~mak2vr/files/alien/alien.png")
 alien.scale_by(1.6)
 alien.yspeed = 0
 
 
-platforms = [gamebox.from_color(100,400,"black",1000,30),
-             gamebox.from_color(500,400,"black",1000,30),
+platforms = [
+    gamebox.from_color(500,400,"black",1000,30),
+    gamebox.from_color(1500,600,"black",500,30),
 ]
 
-length = 1000
-prev_length = 1000
-time_on = 50
-prev_height = 400
-prev_x = 500
-height = 30
+radius = 250
+platform_x = 1500
+platform_length = 500
+platform_end = 1750
+prev_length = 0
+prev_end = 0
+prev_x = 0
+prev_radius = 0
+platform_end
 
-y = 1000
+time_on = 300
 
 
 blue_hole_sheet = gamebox.load_sprite_sheet("http://people.virginia.edu/~mak2vr/files/alien/bluehole.png",1,5)
@@ -39,30 +43,42 @@ speed = 10
 
 def tick(keys):
 
-    global x, score, y, prev_length, time_on, speed, prev_height, length, height
+    global x, score, y, platform_x, time_on, speed, platform_length, platform_end, prev_length, prev_end, prev_x, radius, prev_radius
 
 
     if camera.x % 2000 == 0:
-        speed += 4
+        speed += 3
 
-    #score += speed
-    score = camera.x
+    score = int(camera.x)
     scoreboard = gamebox.from_text(camera.x+300,50,(str(score)),"Verdana",26,"black")
 
     camera.x += speed
     alien.x += speed
 
-    time_on += speed
-
-    if time_on >= .2*length:
+    if alien.x >= (platform_x - platform_length/2) and alien.x <= (platform_x - platform_length/2):
+        time_on += speed
+    elif alien.x >= platform_x - platform_length/2:
         time_on = 0
-        prev_length = length
-        prev_height = height
-        prev_x = x
-        length = random.randint(300,600)
+
+
+    if len(platforms) < 10:
+        prev_length = int(platform_length)
+        prev_x = int(platform_x)
+        prev_end = int(platform_end)
+        prev_radius = radius
+
+        platform_length = int(random.randint(300,600))
+        radius = int(platform_length/2)
+        platform_x = prev_end + radius + random.randint(25,200)
+
+        platform_end = platform_x + radius
+
+
         height = random.randint(300,700)
-        platforms.append(gamebox.from_color(speed*10,height,"black",length,30))
-        x = camera.x
+
+        platforms.append(gamebox.from_color(platform_x,height,"black",2*radius,30))
+
+
 
 
 
@@ -92,8 +108,7 @@ def tick(keys):
             platforms.remove(platform)
         if alien.touches(platform):
             if pygame.K_SPACE in keys:
-                alien.yspeed -= 35
-                keys.clear()
+                alien.yspeed -= 30
 
 
     if pygame.K_RIGHT in keys:
@@ -115,10 +130,14 @@ def tick(keys):
         camera.clear("skyblue")
         camera.draw(game_over)
         camera.display()
-        print(alien.x)
-        print(speed)
-        for platform in platforms:
-            print(platform.x)
+        print("alien",alien.x)
+        print("platform_x",platform_x)
+        print("radius",radius)
+        print("platform end",prev_end)
+        print("prev x", prev_x)
+        print("prev end ", prev_end)
+        print("radius",prev_radius)
+
 
 
     if alien.y >= 800:
